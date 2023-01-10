@@ -17,32 +17,20 @@ mainDiv.appendChild(infoDiv)
 
 const url = 'http://api.weatherapi.com/v1/current.json?key=6d546ac361fe4c238f392320230901&q='
 
-/* input.addEventListener('input', (e) => {
-    option.remove()
-    p.remove()
-    fetch(url + e.target.value + '&aqi=yes').
-    then(response => response.json()).
-    then(data => {
-        option.setAttribute('value', data.location.name)
-        matchingCities.appendChild(option)
-        if(input.value === option.value){
-            p.innerText= data.current.temp_f
-        mainDiv.appendChild(p)
-    }})      
-    }) */
-
 
     input.addEventListener('input', (e) =>{
-
+        
         matchingCities.innerHTML= ''
 
         if(e.target.value.length > 2){
-        fetch('/city.json').then(response => response.json()).then(data=> {
-            data.data.map(x=> x.cities.map(x=> {if ((new RegExp('^' + e.target.value, 'i')).test(x)){
-            const option = document.createElement('option');
-            option.setAttribute('value', x); 
-            matchingCities.appendChild(option)}
-        }))})   
+
+        fetch('/cities.json').then(response => response.json()).then(data=> {
+            data.map(x=> {if ((new RegExp('^' + e.target.value, 'i')).test(x.name) &&
+            !matchingCities.querySelector('option[value=\'' + x.name + '\']')){
+            const option = document.createElement('option')
+            option.setAttribute('value', x.name); 
+            matchingCities.appendChild(option)}})})
+        
     fetch(url + e.target.value + '&aqi=yes').
     then(response => response.json()).
     then(data => {
@@ -72,42 +60,16 @@ const url = 'http://api.weatherapi.com/v1/current.json?key=6d546ac361fe4c238f392
 })
 
 
-
-    //option.addEventListener('click', (e) => console.log(e.target.value))
-
-
-       /* if(e.target.value.length > 2){
-        matchingCities.removeChild(option);
-    fetch('/city.json').then(response => response.json()).then(data=> {
-        data.data.map(x=> x.cities.map(x=> {if ((new RegExp('^' + e.target.value, 'i')).test(x)){
-        const option = document.createElement('option');
-        option.setAttribute('value', x); 
-        matchingCities.appendChild(option)
-    console.log(input.value)}
-    }))}) */
-
-
-    /* fetch(url + e.target.value + '&aqi=yes').
+/* input.addEventListener('input', (e) => {
+    option.remove()
+    p.remove()
+    fetch(url + e.target.value + '&aqi=yes').
     then(response => response.json()).
     then(data => {
-                if(input.value === data.location.name){
+        option.setAttribute('value', data.location.name)
+        matchingCities.appendChild(option)
+        if(input.value === option.value){
             p.innerText= data.current.temp_f
-        mainDiv.appendChild(p) */
-
-/*const option = document.createElement('option')
-
-input.addEventListener('click') 
-
-input.addEventListener('input', (e) => {
-const matching = jsonPackage('./cities.json').filter(x=> (new RegExp('^' + e.target.value).test(x.name)))
-console.log(matching)
-matching.forEach(x=> {option.setAttribute('value', x.city); matchingCities.appendChild(option)})
-    
-});
-
-
-
-
-
-
-/*const option = document.createElement('option')*/
+        mainDiv.appendChild(p)
+    }})      
+    }) */
