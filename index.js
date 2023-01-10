@@ -28,6 +28,10 @@ input.addEventListener('input', (e) => {
     }})      
     })
 
+    fetch('/cities.json').then(response => response.json()).then(data=> {
+        data
+    })
+
 
 /*const option = document.createElement('option')
 
