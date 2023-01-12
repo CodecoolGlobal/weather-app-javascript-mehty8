@@ -2,8 +2,12 @@ let cities;
 
 fetch('/cities.json').then(response => response.json()).then(data=> cities = data)
 
+let favourite=[]
+
+
 const matchingCities = document.createElement('datalist')
 matchingCities.setAttribute('id', 'matches')
+
 const input = document.createElement('input')
 input.setAttribute('type', 'text')
 input.setAttribute('list', 'matches')
@@ -12,10 +16,14 @@ input.setAttribute('placeholder','FuckOff')
 infoDiv = document.createElement('div')
 infoDiv.setAttribute('id', 'infoDiv')
 
+const button = document.createElement('button')
+button.innerText= 'Add to favourite'
+
 
 const mainDiv = document.querySelector('#root')
 mainDiv.appendChild(matchingCities)
 mainDiv.appendChild(input)
+mainDiv.appendChild(button)
 mainDiv.appendChild(infoDiv)
 
 
@@ -41,6 +49,7 @@ const url = 'http://api.weatherapi.com/v1/current.json?key=6d546ac361fe4c238f392
                 if(input.value === data.location.name){
                     infoDiv.innerHTML=''
         const p1 = document.createElement('p')
+        p1.setAttribute('id', 'city')
         p1.innerText= data.location.name
         const p2 = document.createElement('p')
         p2.innerText= 'Temperature ' + data.current.temp_c + ' °C'
@@ -56,12 +65,26 @@ const url = 'http://api.weatherapi.com/v1/current.json?key=6d546ac361fe4c238f392
         infoDiv.appendChild(img)
         infoDiv.appendChild(p4)
     input.value =''
-    matchingCities.innerHTML= ''}}).catch(error => console.log(error))
+    matchingCities.innerHTML= ''
+console.log(favourite)}}).catch(error => console.log(error))
 
                 }
-
-
 })
+
+button.addEventListener('click', () => {
+    favourite.push(infoDiv.querySelector('#city').innerText)
+})
+
+input.addEventListener('focus', () => {
+
+    if(input.value.length === 0 && favourite.length > 0){
+    favourite.map(x=> {
+        if(!matchingCities.querySelector(`option[value='${x}']`)){
+    const option = document.createElement('option')
+    option.setAttribute('value', x); 
+    matchingCities.appendChild(option)}})
+    }})
+
 
 
 /* input.addEventListener('input', (e) => {
