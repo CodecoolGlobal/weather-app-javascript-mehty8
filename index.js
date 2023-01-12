@@ -41,13 +41,13 @@ const url = 'http://api.weatherapi.com/v1/current.json?key=6d546ac361fe4c238f392
             !matchingCities.querySelector(`option[value='${x.name}']`)){
             const option = document.createElement('option')
             option.setAttribute('value', x.name); 
-            matchingCities.appendChild(option)}})
+            matchingCities.appendChild(option)}})}})
         
+    input.addEventListener('change', (e) =>{
+    infoDiv.innerHTML='';
     fetch(url + e.target.value + '&aqi=yes').
     then(response => response.json()).
     then(data => {
-                if(input.value === data.location.name){
-                    infoDiv.innerHTML=''
         const p1 = document.createElement('p')
         p1.setAttribute('id', 'city')
         p1.innerText= data.location.name
@@ -66,24 +66,27 @@ const url = 'http://api.weatherapi.com/v1/current.json?key=6d546ac361fe4c238f392
         infoDiv.appendChild(p4)
     input.value =''
     matchingCities.innerHTML= ''
-console.log(favourite)}}).catch(error => console.log(error))
+console.log(favourite)}).catch(error => console.log(error))})
 
-                }
-})
+let counter=0
+
 
 button.addEventListener('click', () => {
-    favourite.push(infoDiv.querySelector('#city').innerText)
+    if(!favourite.includes(infoDiv.querySelector('#city').innerText)){
+    favourite.push(infoDiv.querySelector('#city').innerText)}
+    counter=0
 })
+
 
 input.addEventListener('focus', () => {
 
-    if(input.value.length === 0 && favourite.length > 0){
+    if(input.value.length === 0 && favourite.length > 0 && counter === 0){
     favourite.map(x=> {
-        if(!matchingCities.querySelector(`option[value='${x}']`)){
     const option = document.createElement('option')
     option.setAttribute('value', x); 
-    matchingCities.appendChild(option)}})
-    }})
+    matchingCities.appendChild(option)})
+counter = 1};
+    })
 
 
 
