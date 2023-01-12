@@ -1,10 +1,22 @@
-const matchingCities = document.createElement("datalist");
-matchingCities.setAttribute("id", "matches");
-const input = document.createElement("input");
-input.setAttribute("type", "text");
-input.setAttribute("list", "matches");
-input.setAttribute("placeholder", "Search...");
+let cities;
+
+fetch('/cities.json').then(response => response.json()).then(data=> cities = data)
+
+let favourite=[]
+
+
+const matchingCities = document.createElement('datalist')
+matchingCities.setAttribute('id', 'matches')
+
+const input = document.createElement('input')
+input.setAttribute('type', 'text')
+input.setAttribute('list', 'matches')
+input.setAttribute('placeholder','Search...')
 document.body.style.backgroundColor = "#38bafe";
+
+
+const button = document.createElement('button')
+button.innerText= 'Add to favourite'
 
 
 infoDiv = document.createElement("div");
