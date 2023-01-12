@@ -11,20 +11,34 @@ matchingCities.setAttribute('id', 'matches')
 const input = document.createElement('input')
 input.setAttribute('type', 'text')
 input.setAttribute('list', 'matches')
-input.setAttribute('placeholder','FuckOff')
-
-infoDiv = document.createElement('div')
-infoDiv.setAttribute('id', 'infoDiv')
+input.setAttribute('placeholder','Search...')
+document.body.style.backgroundColor = "#38bafe";
 
 const button = document.createElement('button')
 button.innerText= 'Add to favourite'
 
+infoDiv = document.createElement('div')
+infoDiv.setAttribute('id', 'infoDiv')
+
+const card = document.createElement("div")
+card.setAttribute("class", "rcorners1");
+
+
+
 
 const mainDiv = document.querySelector('#root')
+mainDiv.setAttribute("id", "mainDiv");
 mainDiv.appendChild(matchingCities)
 mainDiv.appendChild(input)
 mainDiv.appendChild(button)
 mainDiv.appendChild(infoDiv)
+
+const titleContainer = document.createElement("div");
+titleContainer.setAttribute("class", "titleContainer");
+titleContainer.appendChild(document.querySelector("#mainTitle"));
+titleContainer.appendChild(input);
+titleContainer.appendChild(button)
+mainDiv.appendChild(titleContainer);
 
 
 const url = 'http://api.weatherapi.com/v1/current.json?key=6d546ac361fe4c238f392320230901&q='
@@ -42,40 +56,48 @@ const url = 'http://api.weatherapi.com/v1/current.json?key=6d546ac361fe4c238f392
             const option = document.createElement('option')
             option.setAttribute('value', x.name); 
             matchingCities.appendChild(option)}})}})
+
+            let counter=0
         
     input.addEventListener('change', (e) =>{
-    infoDiv.innerHTML='';
+    card.innerHTML='';
     fetch(url + e.target.value + '&aqi=yes').
     then(response => response.json()).
     then(data => {
         const p1 = document.createElement('p')
-        p1.setAttribute('id', 'city')
+        p1.setAttribute('class', 'p1')
         p1.innerText= data.location.name
         const p2 = document.createElement('p')
-        p2.innerText= 'Temperature ' + data.current.temp_c + ' °C'
+        p2.setAttribute('class', 'p2')
+        p2.innerText= data.current.temp_c + ' °C'
         const p3 = document.createElement('p')
+        p3.setAttribute('class', 'p3')
         p3.innerText= data.current.condition.text
         const img = document.createElement('img')
         img.setAttribute('src', data.current.condition.icon)
+        img.setAttribute("class", "img");
         const p4 = document.createElement('p')
         p4.innerText= 'Wind ' + data.current.wind_kph + ' kph'
-        infoDiv.appendChild(p1)
-        infoDiv.appendChild(p2)
-        infoDiv.appendChild(p3)
-        infoDiv.appendChild(img)
-        infoDiv.appendChild(p4)
+        p4.setAttribute("class", "p4");  
+        card.appendChild(p1);
+        card.appendChild(p2);
+        card.appendChild(p3);
+        card.appendChild(img);
+        card.appendChild(p4);
+        titleContainer.appendChild(card);
     input.value =''
     matchingCities.innerHTML= ''
 console.log(favourite)}).catch(error => console.log(error))})
 
-let counter=0
 
 
 button.addEventListener('click', () => {
-    if(!favourite.includes(infoDiv.querySelector('#city').innerText)){
-    favourite.push(infoDiv.querySelector('#city').innerText)}
+    if(!favourite.includes(card.querySelector('.p1').innerText)){
+    favourite.push(card.querySelector('.p1').innerText)}
     counter=0
+    console.log(counter)
 })
+
 
 
 input.addEventListener('focus', () => {
@@ -85,8 +107,10 @@ input.addEventListener('focus', () => {
     const option = document.createElement('option')
     option.setAttribute('value', x); 
     matchingCities.appendChild(option)})
-counter = 1};
+counter = 1
+console.log(counter)};
     })
+
 
 
 
