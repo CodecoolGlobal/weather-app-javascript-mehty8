@@ -29,8 +29,6 @@ card.setAttribute("class", "rcorners1");
 const mainDiv = document.querySelector('#root')
 mainDiv.setAttribute("id", "mainDiv");
 mainDiv.appendChild(matchingCities)
-mainDiv.appendChild(input)
-mainDiv.appendChild(button)
 mainDiv.appendChild(infoDiv)
 
 const titleContainer = document.createElement("div");
@@ -57,7 +55,7 @@ const url = 'http://api.weatherapi.com/v1/current.json?key=6d546ac361fe4c238f392
             option.setAttribute('value', x.name); 
             matchingCities.appendChild(option)}})}})
 
-            let counter=0
+
         
     input.addEventListener('change', (e) =>{
     card.innerHTML='';
@@ -87,6 +85,7 @@ const url = 'http://api.weatherapi.com/v1/current.json?key=6d546ac361fe4c238f392
         titleContainer.appendChild(card);
     input.value =''
     matchingCities.innerHTML= ''
+    
 console.log(favourite)}).catch(error => console.log(error))})
 
 
@@ -94,21 +93,17 @@ console.log(favourite)}).catch(error => console.log(error))})
 button.addEventListener('click', () => {
     if(!favourite.includes(card.querySelector('.p1').innerText)){
     favourite.push(card.querySelector('.p1').innerText)}
-    counter=0
-    console.log(counter)
 })
 
 
 
 input.addEventListener('focus', () => {
-
-    if(input.value.length === 0 && favourite.length > 0 && counter === 0){
+matchingCities.innerHTML=''
+    if(input.value.length === 0 && favourite.length > 0){
     favourite.map(x=> {
     const option = document.createElement('option')
     option.setAttribute('value', x); 
-    matchingCities.appendChild(option)})
-counter = 1
-console.log(counter)};
+    matchingCities.appendChild(option)})};
     })
 
 
@@ -127,4 +122,5 @@ console.log(counter)};
         mainDiv.appendChild(p)
     }})      
     }) */
+
 
